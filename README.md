@@ -10,4 +10,6 @@ Ever worked with a Blu-ray and had to split or edit a video but wanted to still 
 
 ChapterTime is written using C++11 and will not work on prior versions.
 
+Copyright (C) 2015 Shane Panke.
+
 This software utilizes the pugixml library (http://pugixml.org). pugixml is Copyright (C) 2006-2015 Arseny Kapoulkine.
