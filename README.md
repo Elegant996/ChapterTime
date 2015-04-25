@@ -1,3 +1,6 @@
+ChapterTime
+===========
+
 Ever worked with a Blu-ray and had to split or edit a video but wanted to still make use of the chapters? Enter ChapterTime: a CLI-based application that will allow you to delay chapter times, convert to new frame rates and/or purge chapters.
 
 *chaptertime sourcefile [-options]*
