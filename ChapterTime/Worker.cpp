@@ -96,6 +96,8 @@ vector<Chapter> Worker::processTasks(vector<Task> tasks)
 
 			break;
 		case Task::RemoveLast:
+			cout << "Removing last chapter..." << endl;
+
 			//Remove the last chapter.
 			chapters.erase(chapters.end() - 1);
 
