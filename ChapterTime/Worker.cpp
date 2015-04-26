@@ -30,7 +30,7 @@ void Worker::run()
 		return;
 
 	//Output some info.
-	cout << "Operation complete.";
+	cout << "Operation complete." << endl;
 	
 }
 
