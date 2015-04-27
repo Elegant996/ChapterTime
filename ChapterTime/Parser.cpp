@@ -29,7 +29,7 @@ vector<Task> Parser::parseParameters(vector<string> parameters)
 	case 0:
 		//No input or parameters; display all options available.
 		cout << "ChapterTime v1.00 by Shane Panke" << endl;
-		cout << "This program can delay, convert or remove chapters from OGM and XML style chapters." << endl << endl;
+		cout << "A CLI-based application that edits OGM and XML style chapters." << endl << endl;
 		cout << "chaptertime sourcefile [-options]" << endl << endl;
 		cout << "Options:" << endl;
 		cout << setfill(' ') << setw(18) << left << "+/-100ms" << "apply a positive or negative chapter delay" << endl;
@@ -128,6 +128,7 @@ vector<Chapter> Parser::parseOGM()
 	ifstream file;
 	file.exceptions(ifstream::failbit | ifstream::badbit);
 	//Valid format for chapters.
+	regex UTF8("^\xEF\xBB\xBF");
 	regex validTime("^CHAPTER([0-9]){2}=([0-9]){2}:([0-9]){2}:([0-9]){2}.([0-9]){3}$");
 	regex validName("^CHAPTER([0-9]){2}NAME=(.*)$");
 
@@ -142,6 +143,9 @@ vector<Chapter> Parser::parseOGM()
 		//Read the file.
 		while (file.good() && getline(file, timeLine))
 		{
+			if (regex_search(timeLine, UTF8))
+				timeLine = timeLine.substr(3);
+
 			//Check if the lines follows our desired format.
 			smatch timeMatch, nameMatch;
 			if (!regex_search(timeLine, timeMatch, validTime))
