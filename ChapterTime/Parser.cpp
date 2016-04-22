@@ -28,36 +28,40 @@ vector<Task> Parser::parseParameters(vector<string> parameters)
 	{
 	case 0:
 		//No input or parameters; display all options available.
-		cout << "ChapterTime v1.00 by Shane Panke" << endl;
+		cout << "ChapterTime v1.01 by Shane Panke" << endl;
 		cout << "A CLI-based application that edits OGM and XML style chapters." << endl << endl;
 		cout << "chaptertime sourcefile [-options]" << endl << endl;
 		cout << "Options:" << endl;
 		cout << setfill(' ') << setw(18) << left << "+/-100ms" << "apply a positive or negative chapter delay" << endl;
 		cout << setfill(' ') << setw(18) << left << "-23.976/..." << "define source fps to be \"23.976\" (default), \"24.000\", ..." << endl;
 		cout << setfill(' ') << setw(18) << left << "-changeTo24.000" << "change source fps to \"23.976\" (default), \"24.000\", ..." << endl;
+		cout << setfill(' ') << setw(18) << left << "-zeroize" << "applies the first chapter as negative delay to all chapters" << endl;
 		cout << setfill(' ') << setw(18) << left << "-removeLast" << "removes the last chapter in the source" << endl;
 		cout << endl;
 		break;
 	case 1:
-		//Check that we have a valid path before reporting that we have no parameters.
-		if (regex_match(parameters.front(), validFilePath))
-			cout << "No options specified." << endl;
+		//Check that we had a valid file before reporting that we have no parameters.
+		file.open(parameters.front());
+		if (file.good())
+			cerr << "No options specified." << endl;
 		else
-			cout << "Invalid input." << endl;
+			cerr << "Invalid input." << endl;
 		break;
 	default:
-		//Check that we have a valid input.
-		smatch match;
-		if (!regex_match(parameters.front(), match, validFilePath))
+		//Get our file path for later.
+		filePath = parameters.front();
+
+		//Check that we have a valid file.
+		file.open(filePath);
+		if (!file.good())
 		{
 			//File path is not valid.
-			cout << "Invalid input." << endl;
+			cerr << "Invalid input." << endl;
 			break;
 		}
 
 		//Store our file path and format.
-		filePath = match.str();
-		format = regex_search(filePath, regex("xml$")) ? Format::XML : Format::OGM;
+		format = regex_search(filePath, regex(".xml$")) ? Format::XML : Format::OGM;
 
 		//Add task and remove first parameter.
 		tasks.insert(tasks.end(), Task(Task::Parse));
@@ -85,6 +89,9 @@ vector<Task> Parser::parseParameters(vector<string> parameters)
 				regex_search(parameter, match, (regex)"[0-9]{2}.[0-9]{3}");
 				tasks.insert(tasks.end(), Task(Task::ChangeTo, match.str()));
 			}
+			else if (parameter == "-zeroize")
+				//Queue 'zeroizing' all chapters
+				tasks.insert(next(tasks.begin()), Task(Task::Zeroize));
 			else if (parameter == "-removeLast")
 				//Queue the removal of the last Chapter.
 				tasks.insert(next(tasks.begin()), Task(Task::RemoveLast));

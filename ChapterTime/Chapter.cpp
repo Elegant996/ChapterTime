@@ -8,9 +8,35 @@ Chapter::Chapter(Time time, int index, string name)
 	this->name = name;
 }
 
+//Copy constructor
+Chapter::Chapter(const Chapter &chapter)
+{
+	this->time = chapter.time;
+	this->index = chapter.index;
+	this->name = chapter.name;
+}
+
 //Destructor
 Chapter::~Chapter()
 {
+}
+
+//Overload operator-=.
+Chapter& Chapter::operator-=(const Chapter &right)
+{
+	//Use the - operator overload.
+	*this = *this - right;
+
+	return *this;
+}
+
+//Overload operator+.
+Chapter& Chapter::operator-(const Chapter &right)
+{
+	//Use Time's -= operator overload.
+	(*this).time -= right.time;
+
+	return (*this);
 }
 
 //Overload operator*=.

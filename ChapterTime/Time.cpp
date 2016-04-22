@@ -14,6 +14,37 @@ Time::~Time()
 {
 }
 
+//Overload operator-=.
+Time& Time::operator-=(const Time &right)
+{
+	//Use the - operator overload.
+	*this = *this - right;
+
+	return *this;
+}
+
+//Overload operator-.
+Time& Time::operator-(const Time &right)
+{
+	//Get time in milliseconds.
+	int leftTime = (*this).hours * 60 * 60 * 1000 + (*this).minutes * 60 * 1000 + (*this).seconds * 1000 + (*this).milliseconds;
+	int rightTime = right.hours * 60 * 60 * 1000 + right.minutes * 60 * 1000 + right.seconds * 1000 + right.milliseconds;
+
+	//Subtract the right or go to 0 if negative.
+	int newTime = (leftTime - rightTime) > 0 ? (leftTime - rightTime) : 0;
+
+	//Convert it back to standard format.
+	(*this).milliseconds = newTime % 1000;
+	newTime /= 1000;
+	(*this).seconds = newTime % 60;
+	newTime /= 60;
+	(*this).minutes = newTime % 60;
+	newTime /= 60;
+	(*this).hours = newTime;
+
+	return (*this);
+}
+
 //Overload operator*=.
 Time& Time::operator*=(const float &right)
 {

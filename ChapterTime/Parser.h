@@ -40,6 +40,7 @@ public:
 
 private:
 	string filePath;
+	ifstream file;
 	Format format;
 	xml_document doc;
 };

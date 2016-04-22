@@ -10,8 +10,11 @@ class Chapter
 {
 public:
 	Chapter(Time time, int index = 0, string name = "");
+	Chapter(const Chapter &chapter);
 	~Chapter();
 
+	Chapter& operator-=(const Chapter &right);
+	Chapter& operator-(const Chapter &right);
 	Chapter& operator*=(const float &right);
 	Chapter& operator*(const float &right);
 	Chapter& operator+=(const int &right);

@@ -95,6 +95,14 @@ vector<Chapter> Worker::processTasks(vector<Task> tasks)
 			}
 
 			break;
+		case Task::Zeroize:
+			cout << "'Zeroizing' chapters..." << endl;
+
+			//Delay all chapters based on the first one.
+			for (auto chapter = chapters.rbegin(); chapter != chapters.rend(); ++chapter)
+				(*chapter) -= chapters.front();
+
+			break;
 		case Task::RemoveLast:
 			cout << "Removing last chapter..." << endl;
 

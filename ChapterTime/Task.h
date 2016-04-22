@@ -13,6 +13,7 @@ public:
 		Delay,
 		Source,
 		ChangeTo,
+		Zeroize,
 		RemoveLast,
 		Compose
 	};

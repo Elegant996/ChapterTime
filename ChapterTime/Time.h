@@ -8,6 +8,8 @@ public:
 	Time(int hours=0, int minutes=0, int seconds=0, int milliseconds=0);
 	~Time();
 
+	Time& operator-=(const Time &right);
+	Time& operator-(const Time &right);
 	Time& operator*=(const float &right);
 	Time& operator*(const float &right);
 	Time& operator+=(const int &right);
