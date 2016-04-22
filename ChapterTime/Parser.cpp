@@ -17,7 +17,6 @@ vector<Task> Parser::parseParameters(vector<string> parameters)
 {
 	vector<Task> tasks;
 	//List of all valid parameters we can accept.
-	regex validFilePath("^(([a-zA-Z]:)|(\\\\))((\\\\{1})[^\\\\][^/:*?<>\"|]+)+.(txt|ogm|xml)$");
 	regex validOffset("^(-|\\+)[0-9]+ms$");
 	regex validSource("^(-){1}[0-9]{2}.[0-9]{3}$");
 	regex validChange("^(-)changeTo{1}[0-9]{2}.[0-9]{3}$");
@@ -28,7 +27,7 @@ vector<Task> Parser::parseParameters(vector<string> parameters)
 	{
 	case 0:
 		//No input or parameters; display all options available.
-		cout << "ChapterTime v1.01 by Shane Panke" << endl;
+		cout << "ChapterTime v1.02 by Shane Panke" << endl;
 		cout << "A CLI-based application that edits OGM and XML style chapters." << endl << endl;
 		cout << "chaptertime sourcefile [-options]" << endl << endl;
 		cout << "Options:" << endl;
